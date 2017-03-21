@@ -1,13 +1,24 @@
 body{
-	max-width: 960px;
 	background-image: url("../images/bananaStand.png");
 	background-size: cover;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	font-family: 'Abril Fatface', cursive;
+	font-size: 36px;
+}
+.container{
+	text-align: center;
 }
 img{
-	height: 200px;
+	height: 250px;
+	margin: 10px;
+	opacity: .5;
 }
 img:hover{
 	padding:10px;
+	opacity: 1;
 }
 .buttons{
 	height:300px;
@@ -15,9 +26,102 @@ img:hover{
 .buttons:hover{
 	padding:10px;
 }
-.placeholderBox{
+.defenderBox{
 	height: 300px;
-	width: 300px;
-	border: 2px black solid;
+	width: 400px;
+	border: 5px white solid;
+}
+
+.defenderBox{
+	height: 300px;
+	width: 400px;
+	border: 5px white solid;
+}
+.enemyBox{
+	height: 300px;
+	width: 700px;
+	border: 5px white solid;
+}
+.characterBox{
+	height: 300px;
+	width: 500px;
+	border: 5px white solid;
+}
+
+
+header{
+	width:100%;
+	background-color: orange;
+	height:260px;
+	font-size: 80px;
+	text-align: center;
+	background-color: rgba(255, 165, 0, 0.55);
+	color: white;
+	padding: 20px;
+	display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+}
+
+
+h4{
+	font-size: 24px;
+}
+.select{
+	background-color: white;
+}
+#health-scores{
+	width:50%;
+}
+#scoreBox{
+	display: flex;
+    justify-content: center;
+    text-align: left;
+}
+#defenderBox{
+	display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+#enemyBox{
+	display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
+
+}
+#characterBox{
+	display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
+
+}
+h1{
+	width:100%;
+}
+.charChoices{
+	font-weight: bold;
+}
+#characterDiv{
+	display: flex;
+    justify-content: center;
+    margin:10px;
+}
+h6{
+	font-family: 'Amatic SC', cursive;
+	font-size:30px;
+	width: 700px;
+}
+header h1{
+	font-size: 75px;
+	border-bottom: 2px white solid;
+}
+h5{
+	font-size:36px;
+	font-family: 'Amatic SC', cursive;
+	width:100%;
+	margin: 0px;
 }
 

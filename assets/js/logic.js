@@ -1,126 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Trigger Random</title>
-
-  <!-- Added link to the jQuery Library -->
-  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-
-  <!-- Added a link to Bootstrap-->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-
-  <!-- link css -->
-  <link href="https://fonts.googleapis.com/css?family=Amatic+SC" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Abril+Fatface" rel="stylesheet">
-
-  <link rel="stylesheet" href="assets/css/style.css">
-  <script type="text/javascript" src="assets/js/logic.js"></script>
-</head>
-<body>
-
-<header>
-  <h1>Arrested Devolvement</h1>
-  <h5>Instructions:</h5>
-  <h6>The Bluth Company is on the verge of bankruptcy, and it's up to you to save the family business. Select a CEO who will keep the other dysfunctional members of the family in check.
-  </h6>
-</header>
-
-<div class="container">
-
-<!-- choose a character section -->
-<div class="row" id="characterChoices">
-<div class="selectChar">
-
-    <div class="text-center" >
-    Pick a CEO
-    <div class="availableCharacters"> 
-    </div>
-  </div>
-</div>
-</div>
-
-
-  <!-- your character-->
-  <div class="row" id="characterDiv">
-  <div class="col-md-6" id="characterBox">
-  
-    <h1 class="text-center" id="yourCharacter">Current CEO</h1>
-    <div class="userCharacter">
-
-      <div class="characterBox"></div>
-      </div>
-
-  </div>
-  </div>
-
-
-      
-  <div class="row" id="scoreBox">
-  <div class="panel panel-default" id="health-scores">
-  <div class="panel-body">
-
-  <h4>wins:<span class="wins"></span></h4>
-    
-  <h4>your health score: <span class="healthscore"></span></h4>
-   
-  <h4>Defender's health score: <span class="defender-healthscore"></span></h4>
-
-  <button type="button" id="fire" class="btn btn-secondary">Got to Hell!</button>
-</div>
-
-</div>
-</div>
-
-
-
-  <!--defender-->
-  <div class= "row" id="opponentsRow">
-  <div class="col-md-4" id="defenderBox">
-  <h1 class="text-center">Chief Money Grubber</h1>
-    <div class="defender">
-
-      <div class="defenderBox"></div>
-
-
-    </div>
-  </div>
-
-  <div class="col-md-8" id="enemyBox">
-  
-    <h1 class="text-center">Money Grubbers</h1>
-    <div class="enemies">
-
-      <div class="enemyBox">
-      </div>
-
-
-
-                  
-    </div>
-  </div>
-</div>
-</div>
-
-  <!-- <script type="text/javascript">
+// declare variables
 
    var numberOptions = [120, 400, 75, 100];
   var imageOptions =['assets/images/gob.jpg', 'assets/images/lucille.jpg', 'assets/images/buster.jpg', 'assets/images/tobias.jpg'];
   var charNames = ["Gob","Lucille", "Buster", "Tobias"];
   var playerSelected=true;
-  var EnemySelected=true;
+  var enemySelected=true;
   var healthscore=0;
   var defenderHealthScore=0;
-  var hitValue=5;
+  
   var selectedDefender;
-  var newDefenderHealth=0;
   var wins=0;
   var userAttackPower=2;
   var opponentAttackPower=6;
-  var clearHealth=function(){
-    $(".defender-healthscore").append(0);
-  };
-
+ 
    $(document).ready(function() {
 function newGame(){
   
@@ -165,19 +57,25 @@ function newGame(){
     $(this).attr("class", "userCharacter");
     $(this).css("opacity", "1");
     
+    // place selectedChar into different div
     $(".characterBox").append(SelectedPlayer);
+    // get rid of characterchoice div
     $("#characterChoices").hide();
+
+    // assign value from selected character to healthscore
     healthScore=$(this).attr("value");
+    // place healthscore in correct div
     $(".healthscore").append(healthScore);
-    console.log(healthScore);
+    // set playerSelected to false
     playerSelected=false;
+    // alert user of their choice and guide them to next step
     alert("You've select " + $(this).data("name") + " as the new CEO of Bluth Company! Defend yourself against the money-grubbing scum that is your family. Please select an opponent to continue!");
 
 
-
+    // iterate through remaining characters and change them to Opponents
     for(var i=0; i<charNames.length; i++){
       if(charNames[i] != $(this).data("name")){
-        $("#"+charNames[i]).attr("class", "opponent")
+        $("#"+charNames[i]).attr("class", "opponent");
         $('.enemyBox').append($('#'+charNames[i]));
         
       }
@@ -200,6 +98,9 @@ function newGame(){
           defenderHealthScore=$(this).attr("value");
           // place new healthscore in correct div
           $(".defender-healthscore").append(defenderHealthScore);
+          enemySelected=false;
+
+
           
           alert("You've selected "+ $(this).data("name")+ " as the chief of the money-grubbing scumbags. Hit the 'go to hell' button to defend your place!" );
           }
@@ -207,67 +108,76 @@ function newGame(){
 });
 
 });
- 
-        if(playerSelected && EnemySelected){
-      var fireButton= $("<button>");
-      $(".fireButton").append(fireButton);
-    };
+      
+        
+    
 
-    $(".fire").on("click", function() {
-//CANNOT GET HEALTHSCORE TO NOT POPULATE CONCATENATED 
+    $("#fire").on("click", function() {
+      // if opponent has been selected, if not, prompt user to do so.
+    if(enemySelected){
+      alert("please choose an opponent");
+    }else{
+    // if defender health is still about zero, update with hit
      if(defenderHealthScore>0){
+      // user attack power increases over the match
       userAttackPower+=2;
+      // calcute new health scores
       defenderHealthScore-= parseInt(userAttackPower);
       healthScore-= parseInt(opponentAttackPower);
+      // if healthscore is above zero, keep playing
         if(healthScore>0){
-      $(".healthscore").empty();
-      $(".healthscore").append(healthScore);
+            $(".healthscore").empty();
+            $(".healthscore").append(healthScore);
 
-     $(".defender-healthscore").empty();
-      $(".defender-healthscore").append(defenderHealthScore);
+            $(".defender-healthscore").empty();
+            $(".defender-healthscore").append(defenderHealthScore);
         }else{
-          $(".healthscore").empty();
-          $(".healthscore").append(healthScore);
-          alert("Taste my sad, Michael. You lost!");
-           var playAgain=confirm("Play again?");
+          // if not, game over. Ask if they'd like to play again
+            $(".healthscore").empty();
+            $(".healthscore").append(healthScore);
+            alert("Taste my sad, Michael. You lost!");
+            var playAgain=confirm("Play again?");
+            // if they'd like to play, reload page
             if(playAgain){
               location.reload();
             };
 
         }
+        // if defenderhealt is less than or equal to zero
     }else if(defenderHealthScore<=0){
+      // reset healthscore and the divs
+      defenderHealthScore=0;
       $(".defender-healthscore").empty();
-      $(".defender-healthscore").append(0);
+      $(".defender-healthscore").append(defenderHealthScore);
 
-      alert("Nicely done, you blowhard. Select another defender to continue!")
+      // alert user, ask them to choose another opponent
+      alert("Nicely done, you blowhard. Select another defender to continue!");
+      // increment wins by 1
       wins++;
+      // if they beat all three, they win
       if(wins>2){
-        alert("You win! Please refresh page to play again!")
+        alert("You win! Please refresh page to play again!");
       }else{
+        // if they've only beat 1 or 2, update wins,
 
       $(".wins").empty();
       $(".wins").append(wins);
-      console.log(selectedDefender);
-     $(".defender-healthscore").empty()
+      // reset defender health
+    
+     $(".defender-healthscore").empty();
       defenderHealthScore=0;
+      // update html
       $(".defenderBox").empty();
        $(".defender-healthscore").append(defenderHealthScore);
 
       
 
-    }
-    }
+    };
+    };
+  }
 
     });
 
 
     });
 
-
-  
-
-
-  </script> -->
-  
-</body>
-</html>
