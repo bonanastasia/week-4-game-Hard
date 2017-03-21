@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Trigger Random</title>
+
+  <!-- Added link to the jQuery Library -->
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+  <!-- Added a link to Bootstrap-->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  <!-- link css -->
+
+  <link rel="stylesheet" href="assets/css/style.css">
+
+</head>
+<body>
+
+<!-- <div class="charSelectSection">
+  <h2>Select a Character</h2>
+    <div class="row">
+      <div class="startBtn"></div>
+    </div>
+  </div>
+
+  <div class="chosenCharacterSection">
+  <h2>Your Character</h2>
+    <div class="row">
+      <div class="userChar"></div>
+    </div>
+  </div>
+
+  <div class="opponentSelectSection">
+  <h2>Select an Opponent</h2>
+    <div class="row">
+      <div class="opponentChar"></div>
+    </div>
+  </div>
+ -->
+ 
+
+    <h1 class="text-center">Arrested Devolvement</h1>
+
+<!-- choose a character section -->
+    <div class="text-center">
+    <h3>Select a character</h3>
+    <div class="availableCharacters">
+      <!-- Here we have our button for generating random numbers (#random-button) -->
+<!--       <input class="buttons" class= "character" id="gobCharacter" type="image" src="assets/images/gob.jpg"></input>
+
+      <input class="buttons" class= "character" id="lucilleCharacter" type="image" src="assets/images/lucille.jpg"></input>
+
+      <input class="buttons" class= "character" id="busterCharacter" type="image" src="assets/images/buster.jpg"></input>
+
+      <input class="buttons" class= "character" id="tobiasCharacter" type="image" src="assets/images/tobias.jpg"></input> -->
+      
+    </div>
+  </div>
+
+
+  <!-- your character-->
+  <div class="row">
+  
+    <h1 class="text-center">Your Character</h1>
+    <div class="userCharacter">
+
+
+      <div class="col-md-6" class="placeholderBox">
+      </div>
+
+      <button type="button" class="fire" class="btn btn-secondary">fire</button>
+
+      <div class="panel panel-default">
+  <div class="panel-body">
+   <div>your health score: <span class="healthscore"></span></div>
+
+   <div>Defender's health score: <span class="defender-healthscore"></span></div>
+  </div>
+</div>
+
+<h2>wins:<span class="wins"></span></h2>
+
+
+
+
+  	              
+  	</div>
+  </div>
+
+
+  <!--defender-->
+  <div class="row">
+    <div class="defender">
+
+      <div class="placeholderBox3">This is where the defender goes</div>
+
+
+    </div>
+  </div>
+
+  <div class="row">
+  
+    <h1 class="text-center">Enemies</h1>
+    <div class="enemies">
+
+      <div class="placeholderBox2">
+      </div>
+
+
+                  
+    </div>
+  </div>
+
+  <script type="text/javascript">
+
+   var numberOptions = [115, 135, 75, 100];
+  var imageOptions =['assets/images/gob.jpg', 'assets/images/lucille.jpg', 'assets/images/buster.jpg', 'assets/images/tobias.jpg'];
+  var charNames = ["gob","lucille", "buster", "tobias"];
+  var playerSelected=true;
+  var EnemySelected=true;
+  var healthscore=0;
+  var defenderHealthScore=0;
+  var hitValue=5;
+  var selectedDefender;
+  var newDefenderHealth=0;
+  var wins=0;
+
+   $(document).ready(function() {
+function newGame(){
+  // var numberOptions = [115, 135, 75, 100];
+  // var imageOptions =['assets/images/gob.jpg', 'assets/images/lucille.jpg', 'assets/images/buster.jpg', 'assets/images/tobias.jpg'];
+  // var charNames = ["gob","lucille", "buster", "tobias"];
+
+  // Next we create a for loop to create crystals for every numberOption.
+  for (var i = 0; i < numberOptions.length; i++) {
+
+    // For each iteration, we will create an imageCrystal
+    var charPic = $("<img>");
+
+    // First each crystal will be given the class ".crystal-image".
+    // This will allow the CSS to take effect.
+    charPic.addClass("character");
+
+    // Each imageCrystal will be given a src link to the crystal image
+    charPic.attr("src", imageOptions[i]);
+
+    charPic.attr("id", charNames[i]);
+    charPic.attr({'data-name': charNames[i]});
+   
+
+
+    // Each charPic will be given a data attribute called data-crystalValue.
+    // This data attribute will be set equal to the array value.
+    charPic.attr("value", numberOptions[i]);
+
+    // Lastly, each crystal image (with all it classes and attributes) will get added to the page.
+    $(".availableCharacters").append(charPic);
+  };
+
+};
+
+    newGame();
+    myPlayer="";
+
+
+  $(".character").on("click", function() {
+    if(playerSelected){
+    var SelectedPlayer = $(this).attr("id");
+    console.log($(this).attr("id"));
+    $(this).attr("class", "userCharacter");
+    console.log($(this).class);
+    var myPlayer = $(this).userCharacter;
+    $("placeholderBox").append(SelectedPlayer);
+    healthScore=$(this).attr("value");
+    $(".healthscore").append(healthScore);
+    console.log(healthScore);
+    playerSelected=false;
+
+    for(var i=0; i<charNames.length; i++){
+      if(charNames[i] != $(this).data("name")){
+        $("#"+charNames[i]).attr("class", "opponent")
+        $('.enemies').append($('#'+charNames[i]));
+      }
+    }
+  }
+         $(".opponent").on("click", function() {
+          if(playerSelected===false){
+          selectedDefender = $(this);
+          console.log(selectedDefender);
+          $(this).attr("class", "defender");
+          $('.placeholderBox3').append(selectedDefender);
+
+          defenderHealthScore=$(this).attr("value");
+          $(".defender-healthscore").append(defenderHealthScore);
+          console.log(defenderHealthScore);
+          }
+});
+
+});
+ 
+        if(playerSelected && EnemySelected){
+      var fireButton= $("<button>");
+      var fireButtonValue=fireButton.attr("value", hitValue);
+      console.log(fireButton.attr("value"));
+      $(".fireButton").append(fireButton);
+    };
+
+    $(".fire").on("click", function() {
+//CANNOT GET HEALTHSCORE TO NOT POPULATE CONCATENATED 
+     if(defenderHealthScore>0){
+      defenderHealthScore= (parseInt(defenderHealthScore)-hitValue);
+     $(".defender-healthscore").empty();
+      $(".defender-healthscore").append(defenderHealthScore);
+    }else{
+      wins++;
+      if(wins>2){
+        alert("You win! Please refresh page to play again!")
+      }else{
+
+
+// FIX THIS GLITCH!!!!!
+
+
+      $(".wins").append(wins);
+      console.log(selectedDefender);
+     
+
+      $(".placeholderBox3").empty();
+       $(".defender-healthscore").append(newDefenderHealth);
+
+      function chooseNewDefender(){
+
+         $(".opponent").on("click", function() {
+          console.log(defenderHealthScore);
+
+          selectedDefender = $(this);
+          console.log(selectedDefender);
+          $(this).attr("class", "defender");
+           
+
+          $('.placeholderBox3').append(selectedDefender);
+
+          newDefenderHealth=$(this).attr("value");
+          $(".defender-healthscore").append(newDefenderHealth);
+          console.log(defenderHealthScore);
+          
+          });
+      }
+
+      
+
+    }
+    }
+
+    });
+
+
+    });
+
+
+  
+
+
+  </script>
+  
+</body>
+</html>

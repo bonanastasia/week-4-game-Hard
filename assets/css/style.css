@@ -1,0 +1,23 @@
+body{
+	max-width: 960px;
+	background-image: url("../images/bananaStand.png");
+	background-size: cover;
+}
+img{
+	height: 200px;
+}
+img:hover{
+	padding:10px;
+}
+.buttons{
+	height:300px;
+}
+.buttons:hover{
+	padding:10px;
+}
+.placeholderBox{
+	height: 300px;
+	width: 300px;
+	border: 2px black solid;
+}
+
