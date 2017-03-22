@@ -45,8 +45,8 @@
         // assign images to characters
         $(".availableCharacters").append(charPic);
 
-        };
-      };
+        }
+      }
 // begin new game by calling the function to set up variables
     newGame();
     
@@ -143,7 +143,7 @@
               // if they'd like to play, reload page
               if(playAgain){
                 location.reload();
-              };
+              }
 
           }
           // if defenderhealt is less than or equal to zero
@@ -175,12 +175,7 @@
 
       
 
-        };
-      };
+        }
+      }
   }
-
-    });
-
-
-    
-
+});
