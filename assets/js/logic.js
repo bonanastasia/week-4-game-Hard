@@ -14,37 +14,39 @@
   var opponentAttackPower=6;
  
    $(document).ready(function() {
-function newGame(){
-  
-  // create a for loop to create characters for every numberOption.
-  for (var i = 0; i < numberOptions.length; i++) {
-
-    // For each iteration, create an img div
-    var charPic = $("<img>");
-
-    // First each crystal will be given the class "character".
     
-    charPic.addClass("character");
+      function newGame(){
+      
+      // create a for loop to create characters for every numberOption.
+        for (var i = 0; i < numberOptions.length; i++) {
 
-    // Each image needs a source  coinciding with it's index
-    charPic.attr("src", imageOptions[i]);
+        // For each iteration, create an img div
+        var charPic = $("<img>");
+
+        // First each crystal will be given the class "character".
+        
+        charPic.addClass("character");
+
+        // Each image needs a source  coinciding with it's index
+        charPic.attr("src", imageOptions[i]);
 
 
-    // each image gets an id equal to it's name
-    charPic.attr("id", charNames[i]);
-    // each character gets a "name" data value
-    charPic.attr({'data-name': charNames[i]});
-   
+        // each image gets an id equal to it's name
+        charPic.attr("id", charNames[i]);
+        // each character gets a "name" data value
+        charPic.attr({'data-name': charNames[i]});
+       
 
 
-    // Each charPic will be given a value.
-    
-    charPic.attr("value", numberOptions[i]);
+        // Each charPic will be given a value.
+        
+        charPic.attr("value", numberOptions[i]);
 
-    // assign images to characters
-    $(".availableCharacters").append(charPic);
-  };
-};
+        // assign images to characters
+        $(".availableCharacters").append(charPic);
+
+        };
+      };
 // begin new game by calling the function to set up variables
     newGame();
     
@@ -52,35 +54,35 @@ function newGame(){
 
   $(".character").on("click", function() {
     if(playerSelected){
-    var SelectedPlayer = $(this);
-    // add class of userCharacter to Selected Player
-    $(this).attr("class", "userCharacter");
-    $(this).css("opacity", "1");
-    
-    // place selectedChar into different div
-    $(".characterBox").append(SelectedPlayer);
-    // get rid of characterchoice div
-    $("#characterChoices").hide();
-
-    // assign value from selected character to healthscore
-    healthScore=$(this).attr("value");
-    // place healthscore in correct div
-    $(".healthscore").append(healthScore);
-    // set playerSelected to false
-    playerSelected=false;
-    // alert user of their choice and guide them to next step
-    alert("You've select " + $(this).data("name") + " as the new CEO of Bluth Company! Defend yourself against the money-grubbing scum that is your family. Please select an opponent to continue!");
-
-
-    // iterate through remaining characters and change them to Opponents
-    for(var i=0; i<charNames.length; i++){
-      if(charNames[i] != $(this).data("name")){
-        $("#"+charNames[i]).attr("class", "opponent");
-        $('.enemyBox').append($('#'+charNames[i]));
+        var SelectedPlayer = $(this);
+        // add class of userCharacter to Selected Player
+        $(this).attr("class", "userCharacter");
+        $(this).css("opacity", "1");
         
-      }
+        // place selectedChar into different div
+        $(".characterBox").append(SelectedPlayer);
+        // get rid of characterchoice div
+        $("#characterChoices").hide();
+
+        // assign value from selected character to healthscore
+        healthScore=$(this).attr("value");
+        // place healthscore in correct div
+        $(".healthscore").append(healthScore);
+        // set playerSelected to false
+        playerSelected=false;
+        // alert user of their choice and guide them to next step
+        alert("You've select " + $(this).data("name") + " as the new CEO of Bluth Company! Defend yourself against the money-grubbing scum that is your family. Please select an opponent to continue!");
+
+
+        // iterate through remaining characters and change them to Opponents
+        for(var i=0; i<charNames.length; i++){
+          if(charNames[i] != $(this).data("name")){
+            $("#"+charNames[i]).attr("class", "opponent");
+            $('.enemyBox').append($('#'+charNames[i]));
+            
+          }
+        }
     }
-  }
          $(".opponent").on("click", function() {
           // player has been selected
           if(playerSelected===false){
@@ -105,10 +107,11 @@ function newGame(){
           alert("You've selected "+ $(this).data("name")+ " as the chief of the money-grubbing scumbags. Hit the 'go to hell' button to defend your place!" );
           }
 
-});
+        });
 
+  });
 });
-      
+            
         
     
 
@@ -118,66 +121,66 @@ function newGame(){
       alert("please choose an opponent");
     }else{
     // if defender health is still about zero, update with hit
-     if(defenderHealthScore>0){
-      // user attack power increases over the match
-      userAttackPower+=2;
-      // calcute new health scores
-      defenderHealthScore-= parseInt(userAttackPower);
-      healthScore-= parseInt(opponentAttackPower);
-      // if healthscore is above zero, keep playing
-        if(healthScore>0){
-            $(".healthscore").empty();
-            $(".healthscore").append(healthScore);
+       if(defenderHealthScore>0){
+        // user attack power increases over the match
+        userAttackPower+=2;
+        // calcute new health scores
+        defenderHealthScore-= parseInt(userAttackPower);
+        healthScore-= parseInt(opponentAttackPower);
+        // if healthscore is above zero, keep playing
+          if(healthScore>0){
+              $(".healthscore").empty();
+              $(".healthscore").append(healthScore);
 
-            $(".defender-healthscore").empty();
-            $(".defender-healthscore").append(defenderHealthScore);
+              $(".defender-healthscore").empty();
+              $(".defender-healthscore").append(defenderHealthScore);
+            }else{
+            // if not, game over. Ask if they'd like to play again
+              $(".healthscore").empty();
+              $(".healthscore").append(healthScore);
+              alert("Taste my sad, Michael. You lost!");
+              var playAgain=confirm("Play again?");
+              // if they'd like to play, reload page
+              if(playAgain){
+                location.reload();
+              };
+
+          }
+          // if defenderhealt is less than or equal to zero
+      }else if(defenderHealthScore<=0){
+        // reset healthscore and the divs
+        defenderHealthScore=0;
+        $(".defender-healthscore").empty();
+        $(".defender-healthscore").append(defenderHealthScore);
+
+        // alert user, ask them to choose another opponent
+        alert("Nicely done, you blowhard. Select another defender to continue!");
+        // increment wins by 1
+        wins++;
+        // if they beat all three, they win
+        if(wins>2){
+          alert("You win! Please refresh page to play again!");
         }else{
-          // if not, game over. Ask if they'd like to play again
-            $(".healthscore").empty();
-            $(".healthscore").append(healthScore);
-            alert("Taste my sad, Michael. You lost!");
-            var playAgain=confirm("Play again?");
-            // if they'd like to play, reload page
-            if(playAgain){
-              location.reload();
-            };
+          // if they've only beat 1 or 2, update wins,
 
-        }
-        // if defenderhealt is less than or equal to zero
-    }else if(defenderHealthScore<=0){
-      // reset healthscore and the divs
-      defenderHealthScore=0;
-      $(".defender-healthscore").empty();
-      $(".defender-healthscore").append(defenderHealthScore);
-
-      // alert user, ask them to choose another opponent
-      alert("Nicely done, you blowhard. Select another defender to continue!");
-      // increment wins by 1
-      wins++;
-      // if they beat all three, they win
-      if(wins>2){
-        alert("You win! Please refresh page to play again!");
-      }else{
-        // if they've only beat 1 or 2, update wins,
-
-      $(".wins").empty();
-      $(".wins").append(wins);
-      // reset defender health
-    
-     $(".defender-healthscore").empty();
-      defenderHealthScore=0;
-      // update html
-      $(".defenderBox").empty();
-       $(".defender-healthscore").append(defenderHealthScore);
+        $(".wins").empty();
+        $(".wins").append(wins);
+        // reset defender health
+      
+       $(".defender-healthscore").empty();
+        defenderHealthScore=0;
+        // update html
+        $(".defenderBox").empty();
+         $(".defender-healthscore").append(defenderHealthScore);
 
       
 
-    };
-    };
+        };
+      };
   }
 
     });
 
 
-    });
+    
 
