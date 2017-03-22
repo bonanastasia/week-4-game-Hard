@@ -1,7 +1,7 @@
 // declare variables
 
    var numberOptions = [120, 400, 75, 100];
-  var imageOptions =['../assets/images/gob.jpg', '../assets/images/lucille.jpg', '../assets/images/buster.jpg', '../assets/images/tobias.jpg'];
+  var imageOptions =['../images/gob.jpg', '../images/lucille.jpg', '../images/buster.jpg', '../images/tobias.jpg'];
   var charNames = ["Gob","Lucille", "Buster", "Tobias"];
   var playerSelected=true;
   var enemySelected=true;
