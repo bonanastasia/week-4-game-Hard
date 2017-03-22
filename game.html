@@ -15,7 +15,7 @@
   <link href="https://fonts.googleapis.com/css?family=Abril+Fatface" rel="stylesheet">
 
   <link rel="stylesheet" href="assets/css/style.css">
-  <!-- <script type="text/javascript" src="assets/js/logic.js"></script> -->
+  <script type="text/javascript" src="assets/js/logic.js"></script>
 </head>
 <body>
 
@@ -101,23 +101,26 @@
   </div>
 </div>
 </div>
-<script type="text/javascript">
 
-  // declare variables
+  <!-- <script type="text/javascript">
 
-  var numberOptions = [120, 400, 75, 100];
-  var imageOptions =["assets/images/gob.png", "assets/images/lucille.png", "assets/images/buster.png", "assets/images/tobias.png"];
+   var numberOptions = [120, 400, 75, 100];
+  var imageOptions =['assets/images/gob.jpg', 'assets/images/lucille.jpg', 'assets/images/buster.jpg', 'assets/images/tobias.jpg'];
   var charNames = ["Gob","Lucille", "Buster", "Tobias"];
   var playerSelected=true;
-  var enemySelected=true;
+  var EnemySelected=true;
   var healthscore=0;
   var defenderHealthScore=0;
-  
+  var hitValue=5;
   var selectedDefender;
+  var newDefenderHealth=0;
   var wins=0;
   var userAttackPower=2;
   var opponentAttackPower=6;
- 
+  var clearHealth=function(){
+    $(".defender-healthscore").append(0);
+  };
+
    $(document).ready(function() {
 function newGame(){
   
@@ -162,25 +165,19 @@ function newGame(){
     $(this).attr("class", "userCharacter");
     $(this).css("opacity", "1");
     
-    // place selectedChar into different div
     $(".characterBox").append(SelectedPlayer);
-    // get rid of characterchoice div
     $("#characterChoices").hide();
-
-    // assign value from selected character to healthscore
     healthScore=$(this).attr("value");
-    // place healthscore in correct div
     $(".healthscore").append(healthScore);
-    // set playerSelected to false
+    console.log(healthScore);
     playerSelected=false;
-    // alert user of their choice and guide them to next step
     alert("You've select " + $(this).data("name") + " as the new CEO of Bluth Company! Defend yourself against the money-grubbing scum that is your family. Please select an opponent to continue!");
 
 
-    // iterate through remaining characters and change them to Opponents
+
     for(var i=0; i<charNames.length; i++){
       if(charNames[i] != $(this).data("name")){
-        $("#"+charNames[i]).attr("class", "opponent");
+        $("#"+charNames[i]).attr("class", "opponent")
         $('.enemyBox').append($('#'+charNames[i]));
         
       }
@@ -203,9 +200,6 @@ function newGame(){
           defenderHealthScore=$(this).attr("value");
           // place new healthscore in correct div
           $(".defender-healthscore").append(defenderHealthScore);
-          enemySelected=false;
-
-
           
           alert("You've selected "+ $(this).data("name")+ " as the chief of the money-grubbing scumbags. Hit the 'go to hell' button to defend your place!" );
           }
@@ -213,81 +207,67 @@ function newGame(){
 });
 
 });
-      
-        
-    
+ 
+        if(playerSelected && EnemySelected){
+      var fireButton= $("<button>");
+      $(".fireButton").append(fireButton);
+    };
 
-    $("#fire").on("click", function() {
-      // if opponent has been selected, if not, prompt user to do so.
-    if(enemySelected){
-      alert("please choose an opponent");
-    }else{
-    // if defender health is still about zero, update with hit
+    $(".fire").on("click", function() {
+//CANNOT GET HEALTHSCORE TO NOT POPULATE CONCATENATED 
      if(defenderHealthScore>0){
-      // user attack power increases over the match
       userAttackPower+=2;
-      // calcute new health scores
       defenderHealthScore-= parseInt(userAttackPower);
       healthScore-= parseInt(opponentAttackPower);
-      // if healthscore is above zero, keep playing
         if(healthScore>0){
-            $(".healthscore").empty();
-            $(".healthscore").append(healthScore);
+      $(".healthscore").empty();
+      $(".healthscore").append(healthScore);
 
-            $(".defender-healthscore").empty();
-            $(".defender-healthscore").append(defenderHealthScore);
+     $(".defender-healthscore").empty();
+      $(".defender-healthscore").append(defenderHealthScore);
         }else{
-          // if not, game over. Ask if they'd like to play again
-            $(".healthscore").empty();
-            $(".healthscore").append(healthScore);
-            alert("Taste my sad, Michael. You lost!");
-            var playAgain=confirm("Play again?");
-            // if they'd like to play, reload page
+          $(".healthscore").empty();
+          $(".healthscore").append(healthScore);
+          alert("Taste my sad, Michael. You lost!");
+           var playAgain=confirm("Play again?");
             if(playAgain){
               location.reload();
             };
 
         }
-        // if defenderhealt is less than or equal to zero
     }else if(defenderHealthScore<=0){
-      // reset healthscore and the divs
-      defenderHealthScore=0;
       $(".defender-healthscore").empty();
-      $(".defender-healthscore").append(defenderHealthScore);
+      $(".defender-healthscore").append(0);
 
-      // alert user, ask them to choose another opponent
-      alert("Nicely done, you blowhard. Select another defender to continue!");
-      // increment wins by 1
+      alert("Nicely done, you blowhard. Select another defender to continue!")
       wins++;
-      // if they beat all three, they win
       if(wins>2){
-        alert("You win! Please refresh page to play again!");
+        alert("You win! Please refresh page to play again!")
       }else{
-        // if they've only beat 1 or 2, update wins,
 
       $(".wins").empty();
       $(".wins").append(wins);
-      // reset defender health
-    
-     $(".defender-healthscore").empty();
+      console.log(selectedDefender);
+     $(".defender-healthscore").empty()
       defenderHealthScore=0;
-      // update html
       $(".defenderBox").empty();
        $(".defender-healthscore").append(defenderHealthScore);
 
       
 
-    };
-    };
-  }
+    }
+    }
 
     });
 
 
     });
-</script>
 
 
+  
+
+
+  </script> -->
   
 </body>
 </html>
